@@ -1,0 +1,4 @@
+*.pyc
+*.png
+# ignore compiled python 3 files
+__pycache__
