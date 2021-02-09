@@ -14,7 +14,8 @@ def ESUNet(n_in=2, n_out=2,
     input_shape=(128,128,10),
     lrelu_factor=0.1,
     boundary_condition='reflective',
-    last_relu=True
+    last_relu=True,
+    labels=None
     ):
     '''
     Create ED-AFM Unet Keras model.
@@ -26,11 +27,17 @@ def ESUNet(n_in=2, n_out=2,
         boundary_condition: 'reflective' or 'periodic'. Type of boundary condition.
         last_relu: bool or list of bool of length n_out. Whether to use relu after last layer
             for each output.
+        labels: list of str of length n_out. Labels on output layers.
     Returns: tensorflow.keras.models.Model.
     '''
     
     def activation():
         return LeakyReLU(alpha=lrelu_factor)
+    
+    if labels is None:
+        labels = [f'out_{i}' for i in range(n_out)]
+    else:
+        assert len(labels) == n_out
 
     if not isinstance(last_relu, list):
         last_relu = [last_relu] * n_out
@@ -153,7 +160,7 @@ def ESUNet(n_in=2, n_out=2,
             boundary_condition=boundary_condition)(conv8)
         if last_relu[i]:
             conv8 = Activation('relu')(conv8)
-        out = Reshape(input_shape[:2])(conv8)
+        out = Reshape(input_shape[:2], name=labels[i])(conv8)
         outputs.append(out)
 
     model = Model(inputs=inputs, outputs=outputs)
