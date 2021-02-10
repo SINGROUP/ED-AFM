@@ -23,10 +23,18 @@ class Trainer(InverseAFMtrainer):
         self.randomize_distance(delta=0.25)
         self.randomize_tip(max_tilt=0.5)
 
+    def on_afm_start(self):
+        # Use different lateral stiffness for Cl than CO and Xe
+        if self.afmulator.iZPP in [8, 54]:
+            afmulator.scanner.stiffness = np.array([0.25, 0.25, 0.0, 30.0], dtype=np.float32) / -16.0217662
+        elif self.afmulator.iZPP == 17:
+            afmulator.scanner.stiffness = np.array([0.5, 0.5, 0.0, 30.0], dtype=np.float32) / -16.0217662
+        else:
+            raise RuntimeError(f'Unknown tip {self.afmulator.iZPP}')
+
 # Options
 molecules_dir   = './molecules'     # Where to save molecule database
-# save_dir        = './data'          # Where to save training data
-save_dir        = '/media/storage/ES_data'          # Where to save training data
+save_dir        = './data'          # Where to save training data (Note: takes ~270GB)
 
 # Initialize OpenCL environment on GPU
 env = oclu.OCLEnvironment( i_platform = 0 )
@@ -84,15 +92,12 @@ aux_maps = [
 
 # Rotations
 rotations = PPU.sphereTangentSpace(n=100)
-n_best_rotations = 30
+n_best_rotations = 30   # Number of rotations for each molecule
 
 # Number of molecules in each dataset
-# N_train = 4728   # Number of training molecules
-# N_val   = 600    # Number of validation molecules
-# N_test  = 1000   # Number of test molecules
-N_train = 47   # Number of training molecules
-N_val   = 6    # Number of validation molecules
-N_test  = 10   # Number of test molecules
+N_train = 4728   # Number of training molecules
+N_val   = 600    # Number of validation molecules
+N_test  = 1000   # Number of test molecules
 
 # Paths to molecule xyz files
 database_dir = os.path.join(molecules_dir, 'heavy')

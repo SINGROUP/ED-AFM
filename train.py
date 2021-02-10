@@ -33,9 +33,6 @@ class Loader(DataLoader):
     def apply_preprocessing(self, batch):
 
         Xs, Ys, xyz = batch
-
-        Xs = [X[:10] for X in Xs]
-        Ys = [Y[:10] for Y in Ys]
         
         pp.add_norm(Xs, per_layer=True)
         pp.add_gradient(Xs, c=0.3)
@@ -58,8 +55,7 @@ loss_weights      = [1.0, 0.1]                                      # Weights fo
 epochs            = 50                                              # How many epochs to train
 pred_batches      = 2                                               # How many batches to do predictions on
 input_shape       = (128,128,10)                                    # Input size of model
-# data_dir          = './data'                                        # Directory where data is loaded from
-data_dir          = '/media/storage/ES_data'                   
+data_dir          = './data'                                        # Directory where data is loaded from
 model_dir         = './model'                                       # Directory where all output files are saved to
 pred_dir          = os.path.join(model_dir, 'predictions/')         # Where to save predictions
 checkpoint_dir    = os.path.join(model_dir, 'checkpoints/')         # Where to save model checkpoints
@@ -88,7 +84,7 @@ val_loader   = Loader(os.path.join(data_dir, 'val/'))
 test_loader  = Loader(os.path.join(data_dir, 'test/'))
 
 # Setup callbacks
-checkpointer = ModelCheckpoint(checkpoint_dir+'weights_{epoch:d}.h5', save_weights_only=True)
+checkpointer = ModelCheckpoint(os.path.join(checkpoint_dir, 'weights_{epoch:d}.h5'), save_weights_only=True)
 logger = CSVLogger(log_path, append=True)
 plotter = HistoryPlotter(log_path, history_plot_path, descriptors)
 optim_resume = OptimizerResume(model, optimizer_path)
@@ -98,7 +94,7 @@ callbacks = [checkpointer, logger, plotter, optim_resume]
 init_epoch = 0
 model_file = None
 for i in range(1, epochs+1):
-    cp_file = os.path.join(checkpoint_dir, 'weights_%d.h5' % i)
+    cp_file = os.path.join(checkpoint_dir, f'weights_{i}.h5')
     if os.path.exists(cp_file):
         init_epoch += 1
         model_file = cp_file
@@ -106,7 +102,7 @@ for i in range(1, epochs+1):
         break
 if init_epoch > 0:
     model.load_weights(model_file)
-    print('Model weights loaded from '+model_file)
+    print(f'Model weights loaded from {model_file}')
     
 # Fit model
 model.fit(
