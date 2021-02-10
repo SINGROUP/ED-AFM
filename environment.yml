@@ -1,0 +1,17 @@
+name: edafm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - cudatoolkit==10.1.243
+  - cudnn==7.6.5
+  - matplotlib>=3.3.0
+  - imageio
+  - numpy
+  - scipy
+  - pyopencl
+  - ocl-icd-system
+  - pip:
+    - tensorflow>=2.2,<2.4

@@ -14,7 +14,7 @@ def ESUNet(n_in=2, n_out=2,
     input_shape=(128,128,10),
     lrelu_factor=0.1,
     boundary_condition='reflective',
-    last_relu=True,
+    last_relu=[False, True],
     labels=None
     ):
     '''
@@ -172,10 +172,10 @@ def load_pretrained_weights(model, tip_type='CO-Xe'):
     Load pretrained weights for ED-AFM model.
     Arguments:
         model: tensorflow.keras.models.Model. Model to load weights to.
-        tip_type: 'CO-Xe', 'Cl-CO', 'Xe-Cl', or 'CO'. Which tip combination of trained weights
-            to load.
+        tip_type: 'CO-Xe', 'Cl-CO', 'Xe-Cl', 'CO', or 'CO-Xe-nograd'. Which tip combination of
+            trained weights to load.
     '''
-    if tip_type not in ['CO-Xe', 'Cl-CO', 'Xe-Cl', 'CO']:
+    if tip_type not in ['CO-Xe', 'Cl-CO', 'Xe-Cl', 'CO', 'CO-Xe-nograd']:
         raise ValueError(f'Unknown tip type "{tip_type}".')
     weights_path = os.path.join(WEIGHTS_DIR, f'model_{tip_type}.h5')
     model.load_weights(weights_path)

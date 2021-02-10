@@ -311,7 +311,6 @@ def plot_ES_contour(ax, es, height_map, data_lims_es=None, data_lims_hm=None, le
     if levels is None:
         hm_range = hm_max - hm_min
         levels = np.linspace(hm_min+0.05*hm_range, hm_max-0.08*hm_range, 7)
-    print(levels)
 
     ax.contour(height_map.T, levels=levels, vmin=hm_min, vmax=hm_max)
     ax.imshow(es.T, vmin=vmin, vmax=vmax, cmap='coolwarm', origin='lower')
