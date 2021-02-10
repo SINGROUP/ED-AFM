@@ -11,6 +11,7 @@ from .visualization import _calc_plot_dim
 def save_optimizer_state(model, save_path):
     '''
     Save keras optimizer state.
+
     Arguments:
         model: tensorflow.keras.Model.
         save_path: str. Path where optimizer state file is saved to.
@@ -22,6 +23,7 @@ def save_optimizer_state(model, save_path):
 def load_optimizer_state(model, load_path):
     '''
     Load keras optimizer state.
+
     Arguments:
         model: tensorflow.keras.Model.
         save_path: str. Path where optimizer state file is loaded from.
@@ -45,14 +47,17 @@ def load_optimizer_state(model, load_path):
 
 def calculate_losses(model, true, preds=None, X=None):
     '''
-    Calculate losses on each item of a batch for a keras model.
+    Calculate losses on each item of a batch for a keras model. Note: At least one of
+    preds or X has to be provided.
+
     Arguments:
         model: tensorflow.keras.Model.
         true: list of np.ndarray. Reference outputs.
         preds: list of np.ndarray. Predicted outputs.
         X: list of np.ndarray. Inputs used to make predictions in case preds==None.
-    Returns: np.ndarray of shape (len(true), batch_size).
-    Note: At least one of preds or X has to be provided.
+
+    Returns:
+        np.ndarray of shape (len(true), batch_size).
     '''
     import tensorflow.keras.backend as K
 
@@ -75,6 +80,7 @@ def calculate_losses(model, true, preds=None, X=None):
 def download_molecules(save_path='./Molecules', verbose=1):
     '''
     Download database of molecules.
+    
     Arguments:
         save_path: str. Path where the molecule xyz files will be saved.
         verbose: int 0 or 1. Whether to print output information.

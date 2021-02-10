@@ -19,6 +19,7 @@ def ESUNet(n_in=2, n_out=2,
     ):
     '''
     Create ED-AFM Unet Keras model.
+
     Arguments:
         n_in: int. Number of inputs
         n_out: int. Number of outputs.
@@ -28,7 +29,9 @@ def ESUNet(n_in=2, n_out=2,
         last_relu: bool or list of bool of length n_out. Whether to use relu after last layer
             for each output.
         labels: list of str of length n_out. Labels on output layers.
-    Returns: tensorflow.keras.models.Model.
+
+    Returns:
+        tensorflow.keras.models.Model.
     '''
     
     def activation():
@@ -170,6 +173,7 @@ def ESUNet(n_in=2, n_out=2,
 def load_pretrained_weights(model, tip_type='CO-Xe'):
     '''
     Load pretrained weights for ED-AFM model.
+
     Arguments:
         model: tensorflow.keras.models.Model. Model to load weights to.
         tip_type: 'CO-Xe', 'Cl-CO', 'Xe-Cl', 'CO', or 'CO-Xe-nograd'. Which tip combination of

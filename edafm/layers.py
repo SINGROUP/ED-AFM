@@ -15,9 +15,11 @@ n_conv3d_p = 0
 def NNUpsampling(scale=2):
     '''
     Keras nearest-neighbour upsampling layer.
+
     Arguments:
         scale: int. Factor by which to upsample.
-    Returns: tensorflow.keras.layers.Lambda.
+    Returns: 
+        tensorflow.keras.layers.Lambda.
     '''
     global n_upsample
     n_upsample += 1
@@ -30,12 +32,15 @@ def NNUpsampling(scale=2):
 def conv2D_with_bc(input_shape, filters, kernel_size=(3,3), boundary_condition='reflective'):
     '''
     Keras Conv2D layer with boundary conditions for padding.
+
     Arguments:
         input_shape: tuple of ints. Input shape of layer.
         filters: int. Number of filters/channels.
         kernel_size: int or (int, int). Convolution kernel size.
         boundary_condition: 'reflective' or 'periodic'. Type of boundary condition.
-    Returns: tensorflow.keras.models.Model.
+
+    Returns:
+        tensorflow.keras.models.Model.
     '''
     if isinstance(kernel_size, int):
         kernel_size = (kernel_size, kernel_size)
@@ -71,12 +76,15 @@ def conv2D_with_bc(input_shape, filters, kernel_size=(3,3), boundary_condition='
 def conv3D_with_bc(input_shape, filters, kernel_size=(3,3,3), boundary_condition='reflective'):
     '''
     Keras Conv3D layer with boundary conditions for padding.
+
     Arguments:
         input_shape: tuple of ints. Input shape of layer.
         filters: int. Number of filters/channels.
         kernel_size: int or (int, int, int). Convolution kernel size.
         boundary_condition: 'reflective' or 'periodic'. Type of boundary condition.
-    Returns: tensorflow.keras.models.Model.
+
+    Returns:
+        tensorflow.keras.models.Model.
     '''
     if isinstance(kernel_size, int):
         kernel_size = (kernel_size, kernel_size, kernel_size)
@@ -110,4 +118,3 @@ def conv3D_with_bc(input_shape, filters, kernel_size=(3,3,3), boundary_condition
         return None
     conv = Conv3D(filters=filters, kernel_size=kernel_size, padding='valid')(padded)
     return Model(inputs=inp, outputs=conv, name=name)
-

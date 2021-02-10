@@ -8,6 +8,7 @@ Electrostatic Discovery Atomic Force Microscopy
 The code here is written for Python 3.8 or higher. All the main code is in the `edafm` directory. Make sure it is on the Python PATH when running any of the scripts. With Anaconda, you can install the required environment using the provided `environment.yml` file:
 ```sh
 conda env create -f environment.yml
+conda activate edafm
 ```
 Otherwise take a look inside the `environment.yml` file to see which packages are required.
 

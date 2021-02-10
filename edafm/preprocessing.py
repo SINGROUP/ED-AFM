@@ -6,11 +6,12 @@ from PIL import Image
 def add_noise(Xs, c=0.1, randomize_amplitude=False):
     '''
     Add uniform random noise to arrays. In-place operation.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch_size, ...).
         c: float. Amplitude of noise. Is multiplied by (max-min) of sample.
         randomize_amplitude: Boolean. If True, noise amplitude is uniform random in [0,c]
-                             for each sample in the batch.
+            for each sample in the batch.
     '''
     for X in Xs:
         sh = X.shape
@@ -24,12 +25,12 @@ def add_noise(Xs, c=0.1, randomize_amplitude=False):
 
 def add_gradient(Xs, c=0.3):
     '''
-    Add a constant gradient plane with random direction to arrays.
-    In-place operation.
+    Add a constant gradient plane with random direction to arrays. In-place operation.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch_size, x, y, z).
         c: float. Maximum range of gradient plane as a fraction of the
-           range of the array values.
+            range of the array values.
     '''
     assert len(set([X.shape for X in Xs])) == 1 # All same shape
     x, y = np.meshgrid(np.arange(0, Xs[0].shape[1]), np.arange(0, Xs[0].shape[2]), indexing='ij')
@@ -46,6 +47,7 @@ def add_gradient(Xs, c=0.3):
 def add_norm(Xs, per_layer=True):
     '''
     Normalize arrays by subracting the mean and dividing by standard deviation. In-place operation.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch_size, ...).
         per_layer: Boolean. If True, normalized separately for each element in last axis of Xs.
@@ -62,6 +64,7 @@ def add_norm(Xs, per_layer=True):
 def rand_shift_xy(Xs, c=0.02):
     '''
     Randomly shift z layers in x and y. In-place operation.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch_size, x_dim, y_dim, z_dim).
         c: float in [0,1]. Maximum fraction of image size by which to shift.
@@ -88,6 +91,7 @@ def rand_shift_xy(Xs, c=0.02):
 def add_cutout(Xs, n_holes=5):
     '''
     Randomly add cutouts (square patches of zeros) to images. In-place operation.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch_size, x_dim, y_dim, z_dim).
         n_holes: int. Maximum number of cutouts to add.
@@ -135,14 +139,17 @@ def interpolate_and_crop(X, real_dim, target_res=0.125, target_multiple=8):
     '''
     Interpolate batch of AFM images to target resolution and crop to a target
     multiple of pixels in xy plane.
+
     Arguments:
         X: list of np.ndarray of shape (batch, x, y, z). AFM images.
         real_dim: tuple of floats (len_x, len_y): Real-space size of AFM image region
-                  in x- and y-directions in angstroms.
+            in x- and y-directions in angstroms.
         target_res: float. Target size for a pixel in angstroms.
         target_multiple: int. Target multiple of pixels of output image.
-    Returns: list of np.ndarray of shape (batch, x_out, y_out, z). Interpolated
-             and cropped AFM images.
+
+    Returns:
+        list of np.ndarray of shape (batch, x_out, y_out, z). Interpolated
+        and cropped AFM images.
     '''
 
     resized_shape = (int(real_dim[1] // target_res), int(real_dim[0] // target_res))
@@ -169,18 +176,21 @@ def interpolate_and_crop(X, real_dim, target_res=0.125, target_multiple=8):
 
 def add_rotation_reflection(X, Y, rotations=True, reflections=True, multiple=2, crop=None):
     '''
-    Randomly rotate images in a batch to a different random angle (0 - 359 deg) and reflect.
+    Randomly rotate images in a batch to a different random angle and randomly reflect.
+
     Arguments:
         X: list of np.ndarray of shape (batch, x, y, z). AFM images.
         Y: list of np.ndarray of shape (batch, x, y). Reference image descriptors.
         rotations: bool. Whether to augment with rotations.
-        reflections: bool. Whether to augment with reflections. If set True each rotation would be randomly reflected or not.
-        multiple: int. multiplier, how many times the batch size will increase after rotation and reflection augmentation.
+        reflections: bool. Whether to augment with reflections. If True, each rotation is 
+            randomly reflected 50% of the time.
+        multiple: int. How many rotations to do for each sample.
         crop: None or tuple (x_size, y_size). If not None, then output batch is cropped to
-              specified size in the middle of the image.
+            specified size in the middle of the image.
+    
     Returns:
-        X: list of np.ndarray of shape (batch, x_new, y_new, z). Rotation augmented AFM images.
-        Y: list of np.ndarray of shape (batch, x_new, y_new). Rotation augmented reference image descriptors.
+        : tuple (X,Y). X: list of np.ndarray of shape (batch, x_new, y_new, z). Rotation-augmented AFM images.
+        Y: list of np.ndarray of shape (batch, x_new, y_new). Rotation-augmented reference image descriptors.
     '''
  
     if rotations:

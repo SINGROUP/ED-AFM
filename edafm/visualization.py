@@ -14,11 +14,14 @@ def _calc_plot_dim(n, f=0.3):
 def plot_input(X, constant_range=False, cmap='afmhot'):
     '''
     Plot single stack of AFM images.
+
     Arguments:
         X: np.ndarray of shape (x, y, z). AFM image to plot.
         constant_range: Boolean. Whether the different slices should use the same value range or not.
         cmap: str or matplotlib colormap. Colormap to use for plotting.
-    Returns: matplotlib.pyplot.figure. Figure on which the image was plotted.
+
+    Returns:
+        matplotlib.pyplot.figure. Figure on which the image was plotted.
     '''
     rows, cols = _calc_plot_dim(X.shape[-1])
     fig = plt.figure(figsize=(3.2*cols,2.5*rows))
@@ -37,6 +40,7 @@ def plot_input(X, constant_range=False, cmap='afmhot'):
 def make_input_plots(Xs, outdir='./predictions/', start_ind=0, constant_range=False, cmap='afmhot', verbose=1):
     '''
     Plot multiple AFM images to files 0_input.png, 1_input.png, ... etc.
+
     Arguments:
         Xs: list of np.ndarray of shape (batch, x, y, z). Input AFM images to plot.
         outdir: str. Directory where images are saved.
@@ -71,9 +75,12 @@ def make_input_plots(Xs, outdir='./predictions/', start_ind=0, constant_range=Fa
 def make_prediction_plots(preds=None, true=None, losses=None, descriptors=None, outdir='./predictions/', start_ind=0, verbose=1):
     '''
     Plot predictions/references for image descriptors.
+
     Arguments:
-        preds: list of np.ndarray of shape (batch_size, x_dim, y_dim). Predicted maps. Each list element corresponds to one descriptor.
-        true: list of np.ndarray of shape (batch_size, x_dim, y_dim). Reference maps. Each list element corresponds to one descriptor.
+        preds: list of np.ndarray of shape (batch_size, x_dim, y_dim). Predicted maps.
+            Each list element corresponds to one descriptor.
+        true: list of np.ndarray of shape (batch_size, x_dim, y_dim). Reference maps.
+            Each list element corresponds to one descriptor.
         losses: np.ndarray of shape (len(preds), batch_size). Losses for each predictions.
         descriptors: list of str. Names of descriptors. The name "ES" causes the coolwarm colormap to be used.
         outdir: str. Directory where images are saved.
@@ -171,13 +178,14 @@ def make_prediction_plots(preds=None, true=None, losses=None, descriptors=None, 
 def plot_ES_3D(ax, es, height_map, box_lims=((2, 18), (2, 18)), data_lims=None, colorbar=True, axis_off=False):
     '''
     Plot ES Map descriptor onto the 3D surface defined by corresponding Height Map.
+
     Arguments:
         ax: mpl_toolkits.mplot3d.axes3d.Axes3D. Axes onto which the descriptor is plotted.
         es: np.ndarray of shape (x, y). ES Map descriptor.
         height_map: np.ndarray of shape (x, y). Height Map descriptor.
         box_lims: tuple ((x_min, x_max), (y_min, y_max)). Plot region limits in angstroms.
         data_lims: None or tuple (vmin, vmax). Minimum and maximum value of data range.
-                   If None, calculated from ES Map.
+            If None, calculated from ES Map.
         colorbar: bool. Plot colorbar for ES Map.
         axis_off: bool. Turn axis off.
     '''
@@ -222,6 +230,7 @@ def plot_ES_3D(ax, es, height_map, box_lims=((2, 18), (2, 18)), data_lims=None, 
 def make_prediction_plots_ES(preds, true, box_lims=((2, 18), (2, 18)), outdir='./predictions/', start_ind=0, verbose=1):
     '''
     Plot 3D representation of predictions/references for ES and Height Maps.
+
     Arguments:
         preds: list of two np.ndarrays of shape (batch_size, x_dim, y_dim). Predicted ES and Height Maps.
         true: list of two np.ndarrays of shape (batch_size, x_dim, y_dim). Reference ES and Height Maps.
@@ -280,21 +289,24 @@ def plot_ES_contour(ax, es, height_map, data_lims_es=None, data_lims_hm=None, le
         es_colorbar=True, hm_colorbar=True, axis_off=False):
     '''
     Plot ES Map descriptor and overlay it with a contour plot of the Height Map.
+
     Arguments:
         ax: mpl_toolkits.mplot3d.axes3d.Axes3D. Axes onto which the descriptor is plotted.
         es: np.ndarray of shape (x, y). ES Map descriptor.
         height_map: np.ndarray of shape (x, y). Height Map descriptor.
         data_lims_es: None or tuple (vmin, vmax). Minimum and maximum value of ES data range.
-                      If None, calculated from ES Map.
+            If None, calculated from ES Map.
         data_lims_hm: None or tuple (vmin, vmax). Minimum and maximum value of Height data range.
-                      If None, calculated from Height Map.
+            If None, calculated from Height Map.
         levels: list of float or None. Contour line levels to plot. If None, calculated automatically from Height Map.
         es_colorbar: bool. Plot colorbar for ES Map.
         hm_colorbar: bool. Plot colorbar for Height Map contour.
         axis_off: bool. Turn axis off.
+
     Returns:
-        es_cbar: matplotlib.colorbar.Colorbar if es_colorbar==True or None otherwise. ES map colorbar instance.
-        hm_cbar: matplotlib.colorbar.Colorbar if hm_colorbar==True or None otherwise. Height Map colorbar instance.
+        : tuple (es_cbar, hm_cbar). es_cbar: matplotlib.colorbar.Colorbar if es_colorbar==True or None otherwise.
+        ES map colorbar instance. hm_cbar: matplotlib.colorbar.Colorbar if hm_colorbar==True or None otherwise.
+        Height Map colorbar instance.
     '''
 
     if data_lims_es is None:

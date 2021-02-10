@@ -15,6 +15,7 @@ from .visualization import _calc_plot_dim
 class DataLoader(Sequence):
     '''
     Data loader for keras model training.
+
     Arguments:
         data_path: str. Path to directory where batch data is saved.
     '''
@@ -30,6 +31,15 @@ class DataLoader(Sequence):
         return Xs, Ys
 
     def load_batch(self, index):
+        '''
+        Load batch from disk.
+        
+        Arguments:
+            index: int. Index of batch to load.
+        
+        Returns:
+            list of np.ndarray.
+        '''
         path = os.path.join(self.batch_ids[index])
         batch = np.load(path, allow_pickle=True)
         return batch['arr_0']
@@ -42,11 +52,13 @@ class DataLoader(Sequence):
         return self.apply_preprocessing(batch)
 
     def shuffle(self):
+        '''Shuffle batch order.'''
         random.shuffle(self.batch_ids)
 
 class OptimizerResume(Callback):
     '''
     Save keras optimizer state at the end of epoch and load when resuming training.
+
     Arguments:
         model: tf.keras.Model. Model whose optimizer state to save and load.
         save_path: str. Path where to save/load the optimizer state.
@@ -58,12 +70,14 @@ class OptimizerResume(Callback):
         load_optimizer_state(self.model, self.save_path)
 
     def on_epoch_end(self, epoch, log):
+        '''Save current optimizer state.'''
         print('')
         save_optimizer_state(self.model, self.save_path)
 
 class HistoryPlotter(Callback):
     '''
     Keras callback for plotting history in the middle of training.
+
     Arguments:
         log_path: str. Path where loss log is saved.
         plot_path: str. Path where plot of loss history is saved.
@@ -74,17 +88,19 @@ class HistoryPlotter(Callback):
         self.log_path = log_path
         self.plot_path = plot_path
         self.loss_labels = ['Total_weighted'] + loss_labels
-        self.read_log()
+        self._read_log()
 
     @property
     def losses(self):
+        '''np.ndarray. Training losses.'''
         return np.array(self._losses)
 
     @property
     def val_losses(self):
+        '''np.ndarray. Validation losses.'''
         return np.array(self._val_losses)
 
-    def read_log(self):
+    def _read_log(self):
         self._losses = []
         self._val_losses = []
         if os.path.exists(self.log_path):
@@ -101,6 +117,7 @@ class HistoryPlotter(Callback):
                     self._val_losses.append([lv[-1]] + lv[:-1])
 
     def on_epoch_end(self, epoch, logs):
+        '''Add losses of current epoch'''
         lt = [logs['loss']]
         lv = [logs['val_loss']]
         for label in self.loss_labels[1:]:
@@ -111,6 +128,12 @@ class HistoryPlotter(Callback):
         self.plot()
 
     def plot(self, show=False):
+        '''
+        Plot history of losses.
+
+        Arguments:
+            show: bool. Whether to show the plot on screen.
+        '''
         x = range(1, len(self._losses)+1)
         n_rows, n_cols = _calc_plot_dim(len(self.loss_labels), f=0)
         fig, axes = plt.subplots(n_rows, n_cols, figsize=(4.5*n_cols, 4*n_rows))

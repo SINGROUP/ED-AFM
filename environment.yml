@@ -13,5 +13,7 @@ dependencies:
   - scipy
   - pyopencl
   - ocl-icd-system
+  - sphinx            # For docs
+  - sphinx_rtd_theme  # For docs
   - pip:
     - tensorflow>=2.2,<2.4
