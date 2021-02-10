@@ -1,7 +1,7 @@
 # ED-AFM
 Electrostatic Discovery Atomic Force Microscopy
 
-![Schematic](/figures/data_flow.pdf)
+![Schematic](/figures/data_flow.png)
 
 ## Setup
 
