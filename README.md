@@ -3,6 +3,8 @@ Electrostatic Discovery Atomic Force Microscopy
 
 ![Schematic](/figures/data_flow.png)
 
+[Reference](https://ed-afm.readthedocs.io/en/latest/index.html)
+
 ## Setup
 
 The code here is written for Python 3.8 or higher. All the main code is in the `edafm` directory. Make sure it is on the Python PATH when running any of the scripts. With Anaconda, you can install the required environment using the provided `environment.yml` file:

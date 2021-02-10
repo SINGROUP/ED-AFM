@@ -1,0 +1,5 @@
+matplotlib==3.3.3
+numpy==1.18.5
+sphinx==3.4.3
+sphinx_rtd_theme==0.5.1
+tensorflow>=2.2,<2.4
