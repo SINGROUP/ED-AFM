@@ -1,0 +1,21 @@
+name: edafm
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - cudatoolkit=10.1
+  - cudnn=7
+  - pytorch=1.7.0
+  - torchvision=0.8.0
+  - torchaudio=0.7.0
+  - matplotlib>=3.3.0
+  - imageio
+  - numpy
+  - scipy
+  - pyopencl
+  - ocl-icd-system
+  - sphinx            # For docs
+  - sphinx_rtd_theme  # For docs
