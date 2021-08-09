@@ -1,9 +1,12 @@
 
+import os
+
 import torch
 import torch.nn as nn
 from  torch.nn.modules.upsampling import Upsample
 
 from .layers import Conv3dBlock, Conv2dBlock, _get_padding, UNetAttentionConv
+from .utils import download_weights
 
 class AttentionUNet(nn.Module):
     '''
@@ -284,9 +287,19 @@ class EDAFMNet(AttentionUNet):
 
     Arguments:
         device: str. Device to load model onto.
+        trained_weights: str or None. If not None, load pretrained weights to the model. One of 'base',
+            'single-channel', 'CO-Cl', 'Xe-Cl', 'constant-noise', 'uniform-noise', 'no-gradient', or
+            'matched-tips'.
+        weights_dir: str. If weights_type is not None, directory where the weights will be downloaded into.
     '''
 
-    def __init__(self, device='cuda'):
+    def __init__(self, device='cuda', trained_weights=None, weights_dir='./weights'):
+
+        if trained_weights == 'single-channel':
+            n_in = 1
+        else:
+            n_in = 2
+
         super().__init__(
             conv3d_in_channels          = 1,
             conv2d_in_channels          = 192,
@@ -299,7 +312,7 @@ class EDAFMNet(AttentionUNet):
             conv2d_block_channels       = [512],
             conv2d_block_depth          = 3,
             conv2d_dropouts             = [0.0],
-            n_in                        = 2,
+            n_in                        = n_in,
             n_out                       = 1,
             upscale2d_block_channels    = [256, 128, 64],
             upscale2d_block_depth       = 2,
@@ -313,4 +326,7 @@ class EDAFMNet(AttentionUNet):
             padding_mode                = 'replicate',
             device                      = device
         )
-
+        
+        if trained_weights:
+            weights_path = download_weights(trained_weights, weights_dir)
+            self.load_state_dict(torch.load(weights_path))

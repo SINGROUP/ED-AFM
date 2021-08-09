@@ -10,6 +10,17 @@ import torch
 
 from .visualization import _calc_plot_dim
 
+TRAINED_WEIGHT_URLS = {
+    'base'          : 'https://www.dropbox.com/s/hgtud62vg65g5ax/base.pth?dl=1',
+    'single-channel': 'https://www.dropbox.com/s/cl84b7flx9rguu4/single-channel.pth?dl=1',
+    'CO-Cl'         : 'https://www.dropbox.com/s/pbp6fektz02emvh/CO-Cl.pth?dl=1',
+    'Xe-Cl'         : 'https://www.dropbox.com/s/sc7bd78ybwfj31r/Xe-Cl.pth?dl=1',
+    'constant-noise': 'https://www.dropbox.com/s/uqwwm9tzm59lyf6/constant-noise.pth?dl=1',
+    'uniform-noise' : 'https://www.dropbox.com/s/ic4v0f1vc11v988/uniform_noise.pth?dl=1',
+    'no-gradient'   : 'https://www.dropbox.com/s/1gleijnn89itjqt/no-gradient.pth?dl=1',
+    'matched-tips'  : 'https://www.dropbox.com/s/fv16hpl4c9a09xo/matched-tips.pth?dl=1'
+}
+
 def download_molecules(save_path='./Molecules', verbose=1):
     '''
     Download database of molecules.
@@ -32,7 +43,39 @@ def download_molecules(save_path='./Molecules', verbose=1):
         os.remove(temp_file)
         if verbose: print(f'Moved files to {save_path}.')
     else:
-        print(f'Target folder {save_path} already exists. Skipping downloading molecules.')
+        if verbose: print(f'Target folder {save_path} already exists. Skipping downloading molecules.')
+
+def download_weights(weights_type='base', weights_dir='./weights', verbose=1):
+    '''
+    Download pretrained weights for EDAFMNet model.
+
+    Arguments:
+        weights_type: str. Type of weights to download. One of 'base', 'single-channel', 'CO-Cl', 'Xe-Cl',
+            'constant-noise', 'uniform-noise', 'no-gradient', or 'matched-tips'.
+        weights_dir: str. Directory where the weight will be downloaded into.
+        verbose: int 0 or 1. Whether to print information.
+    '''
+
+    weights_path = os.path.join(weights_dir, f'{weights_type}.pth')
+
+    if not os.path.exists(weights_path):
+
+        try:
+            download_url = TRAINED_WEIGHT_URLS[weights_type]
+        except KeyError:
+            raise ValueError(f'Invalid trained weights type "{weights_type}". '
+                + f'Has to be one of {", ".join(TRAINED_WEIGHT_URLS.keys())}.')
+    
+        if not os.path.exists(weights_dir):
+            os.makedirs(weights_dir)
+
+        if verbose: print(f'Downloading pretrained weights of type "{weights_type}" into {weights_path}.')
+        weights_path, info = urlretrieve(download_url, weights_path)
+    
+    else:
+        if verbose: print(f'Target path {weights_path} already exists. Skipping downloading weights.')
+
+    return weights_path
 
 def count_parameters(module):
     '''
