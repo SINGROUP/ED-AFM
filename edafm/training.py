@@ -104,9 +104,9 @@ def make_dataloader(datadir, preproc_fn, print_timings=False, num_workers=8): #T
         print_timings: Boolean. Whether to print timings for each batch.
         num_workers: int. Number of parallel processes for data loading.
 
-    Returns:
-        dataset: ImgDataset.
-        dataloader: torch.DataLoader.
+    Returns: tuple (dataset, dataloader)
+        | dataset: ImgDataset.
+        | dataloader: torch.DataLoader.
     '''
     dataset = ImgDataset(datadir, preproc_fn, print_timings=print_timings)
     dataloader = DataLoader(

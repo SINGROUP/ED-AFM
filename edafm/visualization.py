@@ -39,7 +39,7 @@ def plot_input(X, constant_range=False, cmap='afmhot'):
         
 def make_input_plots(Xs, outdir='./predictions/', start_ind=0, constant_range=False, cmap='afmhot', verbose=1):
     '''
-    Plot multiple AFM images to files 0_input.png, 1_input.png, ... etc.
+    Plot multiple AFM image stacks to files 0_input.png, 1_input.png, ... etc.
 
     Arguments:
         Xs: list of np.ndarray of shape (batch, x, y, z). Input AFM images to plot.

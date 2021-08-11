@@ -10,6 +10,8 @@ _While offering unprecedented resolution of atomic and electronic structure, Sca
 
 This repository serves as an archive of the code and data used to achieve the results in the above paper, and it is not subject to any further development. However, if there is a broken link etc., do raise an issue to let us know.
 
+API reference: https://ed-afm.readthedocs.io/en/latest/ (Auto-generated from docstring using Sphinx)
+
 ## Setup
 
 The code here is written for Python 3.8 or higher. All the main code is in the `edafm` directory. Make sure it is on the Python PATH when running any of the scripts. With Anaconda/Miniconda, you can install the required environment using the provided `environment.yml` file:

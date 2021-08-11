@@ -155,8 +155,8 @@ def interpolate_and_crop(X, real_dim, target_res=0.125, target_multiple=8):
         target_res: float. Target size for a pixel in angstroms.
         target_multiple: int. Target multiple of pixels of output image.
 
-    Returns: list of np.ndarray of shape (batch, x_out, y_out, z). Interpolated
-        and cropped AFM images.
+    Returns: list of np.ndarray of shape (batch, x_out, y_out, z)
+        Interpolated and cropped AFM images.
     '''
 
     resized_shape = (int(real_dim[1] // target_res), int(real_dim[0] // target_res))
@@ -195,9 +195,9 @@ def add_rotation_reflection(X, Y, reflections=True, multiple=2, crop=None, per_b
             specified size in the middle of the image.
         per_batch_item: bool. If True, rotation is randomized per batch item, otherwise same rotation for all.
     
-    Returns:
-        X: list of np.ndarray of shape (batch*multiple, x_new, y_new, z). Rotation augmented AFM images.
-        Y: list of np.ndarray of shape (batch*multiple, x_new, y_new). Rotation augmented reference image descriptors.
+    Returns: tuple (X, Y)
+        | X: list of np.ndarray of shape (batch*multiple, x_new, y_new, z). Rotation augmented AFM images.
+        | Y: list of np.ndarray of shape (batch*multiple, x_new, y_new). Rotation augmented reference image descriptors.
     '''
  
     X_aug = [[] for _ in range(len(X))]
@@ -240,6 +240,7 @@ def add_rotation_reflection(X, Y, reflections=True, multiple=2, crop=None, per_b
 def random_crop(X, Y, min_crop=0.5, max_aspect=2.0, multiple=8, distribution='flat'):
     '''
     Randomly crop images in a batch to a different size and aspect ratio.
+
     Arguments:
         X: list of np.ndarray of shape (batch, x, y, z). AFM images.
         Y: list of np.ndarray of shape (batch, x, y). Reference image descriptors.
@@ -247,13 +248,14 @@ def random_crop(X, Y, min_crop=0.5, max_aspect=2.0, multiple=8, distribution='fl
         max_aspect: float >=1.0. Maximum aspect ratio for crop. Cannot be more than 1/min_crop.
         multiple: int. The crop size is rounded down to the specified integer multiple.
         distribution: 'flat' or 'exp-log'. How aspect ratios are distributed. If 'flat', then
-                      distribution is random uniform between (1, max_aspect) and half of time
-                      is flipped. If 'exp-log', then distribution is exp of log of uniform
-                      distribution over (1/max_aspect, max_aspect). 'exp-log' is more biased
-                      towards square aspect ratios.
-    Returns:
-        X: list of np.ndarray of shape (batch, x_new, y_new, z). Cropped AFM images.
-        Y: list of np.ndarray of shape (batch, x_new, y_new). Cropped reference image descriptors.
+            distribution is random uniform between (1, max_aspect) and half of time
+            is flipped. If 'exp-log', then distribution is exp of log of uniform
+            distribution over (1/max_aspect, max_aspect). 'exp-log' is more biased
+            towards square aspect ratios.
+    
+    Returns: tuple (X, Y)
+        | X: list of np.ndarray of shape (batch, x_new, y_new, z). Cropped AFM images.
+        | Y: list of np.ndarray of shape (batch, x_new, y_new). Cropped reference image descriptors.
     '''
     assert 0 < min_crop <= 1.0
     assert max_aspect >= 1.0

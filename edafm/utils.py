@@ -62,7 +62,8 @@ def download_weights(weights_type='base', weights_dir='./weights', verbose=1):
 
     Arguments:
         weights_type: str. Type of weights to download. One of 'base', 'single-channel', 'CO-Cl', 'Xe-Cl',
-            'constant-noise', 'uniform-noise', 'no-gradient', or 'matched-tips'.
+            'constant-noise', 'uniform-noise', 'no-gradient', or 'matched-tips'. See README at
+            https://github.com/SINGROUP/ED-AFM for explanations for the different options.
         weights_dir: str. Directory where the weight will be downloaded into.
         verbose: int 0 or 1. Whether to print information.
     '''
@@ -266,8 +267,8 @@ def read_xyzs(file_paths, return_comment=False):
         file_paths: list of str. Paths to xyz files
         return_comment: bool. If True, also return the comment string on second line of file.
     
-    Returns: list of np.array of shape (num_atoms, 4) or (num_atoms, 5). Each row
-             corresponds to one atom with [x, y, z, element] or [x, y, z, charge, element].
+    Returns: list of np.array of shape (num_atoms, 4) or (num_atoms, 5).
+        Each row corresponds to one atom with [x, y, z, element] or [x, y, z, charge, element].
     '''
     mols = []
     comments = []

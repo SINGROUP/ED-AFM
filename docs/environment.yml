@@ -1,0 +1,16 @@
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - pytorch=1.7.0
+  - torchvision=0.8.0
+  - torchaudio=0.7.0
+  - cpuonly
+  - matplotlib>=3.3.0
+  - numpy
+  - scipy
+  - sphinx
+  - sphinx_rtd_theme

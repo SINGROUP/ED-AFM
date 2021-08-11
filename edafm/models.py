@@ -289,7 +289,8 @@ class EDAFMNet(AttentionUNet):
         device: str. Device to load model onto.
         trained_weights: str or None. If not None, load pretrained weights to the model. One of 'base',
             'single-channel', 'CO-Cl', 'Xe-Cl', 'constant-noise', 'uniform-noise', 'no-gradient', or
-            'matched-tips'.
+            'matched-tips'. See README at https://github.com/SINGROUP/ED-AFM for explanations for the
+            different options.
         weights_dir: str. If weights_type is not None, directory where the weights will be downloaded into.
     '''
 
