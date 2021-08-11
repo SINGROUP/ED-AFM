@@ -21,6 +21,17 @@ TRAINED_WEIGHT_URLS = {
     'matched-tips'  : 'https://www.dropbox.com/s/fv16hpl4c9a09xo/matched-tips.pth?dl=1'
 }
 
+ELEMENTS = ['H' , 'He', 
+            'Li', 'Be',  'B',  'C',  'N',  'O',  'F', 'Ne', 
+            'Na', 'Mg', 'Al', 'Si',  'P',  'S', 'Cl', 'Ar',
+             'K', 'Ca', 
+            'Sc', 'Ti',  'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn',
+                        'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr',
+            'Rb', 'Sr',
+             'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd',
+                        'In', 'Sn', 'Sb', 'Te',  'I', 'Xe'
+]
+
 def download_molecules(save_path='./Molecules', verbose=1):
     '''
     Download database of molecules.
@@ -246,3 +257,34 @@ def load_checkpoint(model, optimizer=None, file_name='./model.pth', lr_scheduler
             print('Learning rate scheduler parameters could not be loaded.')
             
     if verbose: print(msg)
+
+def read_xyzs(file_paths, return_comment=False):
+    '''
+    Read molecule xyz files.
+
+    Arguments:
+        file_paths: list of str. Paths to xyz files
+        return_comment: bool. If True, also return the comment string on second line of file.
+    
+    Returns: list of np.array of shape (num_atoms, 4) or (num_atoms, 5). Each row
+             corresponds to one atom with [x, y, z, element] or [x, y, z, charge, element].
+    '''
+    mols = []
+    comments = []
+    for file_path in file_paths:
+        with open(file_path, 'r') as f:
+            N = int(f.readline().strip())
+            comments.append(f.readline())
+            atoms = []
+            for line in f:
+                line = line.strip().split()
+                try:
+                    elem = int(line[0])
+                except ValueError:
+                    elem = ELEMENTS.index(line[0]) + 1
+                posc = [float(p) for p in line[1:]]
+                atoms.append(posc + [elem])
+        mols.append(np.array(atoms))
+    if return_comment:
+        mols = mols, comments
+    return mols
