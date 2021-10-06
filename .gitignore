@@ -1,4 +1,8 @@
 *.pyc
 *.png
+*.pdf
+molecules
+ProbeParticleModel
+figures/weights
 # ignore compiled python 3 files
 __pycache__
