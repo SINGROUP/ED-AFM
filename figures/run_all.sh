@@ -3,7 +3,7 @@
 python sims.py
 python ptcda.py
 python bcb.py
-python bcb_surface_sim.py
+python surface_sims_bcb_water.py
 pdflatex model_schem.tex
 python stats.py
 python esmap_sample.py
