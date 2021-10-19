@@ -23,9 +23,12 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
+# Set matplotlib font rendering to use LaTex
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Computer Modern Roman"]
+})
 
 class Trainer(InverseAFMtrainer):
 
@@ -33,7 +36,7 @@ class Trainer(InverseAFMtrainer):
         if self.afmulator.iZPP in [8, 54]:
             afmulator.scanner.stiffness = np.array([0.25, 0.25, 0.0, 30.0], dtype=np.float32) / -16.0217662
         elif self.afmulator.iZPP == 17:
-            afmulator.scanner.stiffness = np.array([0.75, 0.75, 0.0, 30.0], dtype=np.float32) / -16.0217662
+            afmulator.scanner.stiffness = np.array([0.50, 0.50, 0.0, 30.0], dtype=np.float32) / -16.0217662
         else:
             raise RuntimeError(f'Unknown tip {self.afmulator.iZPP}')
 
