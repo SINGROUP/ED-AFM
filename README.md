@@ -63,21 +63,23 @@ All the data used for the predictions in the paper can be found under the `data`
 
 The scripts used to generate most of the figures in the paper are provided under the directory `figures`. The scripts correspond to the figures as follows:
 
- - Fig. 2: sims.py
- - Fig. 3: ptcda.py
- - Fig. 4: bcb.py
- - Fig. 5: bcb_surface_sim.py
+ - Fig. 1: sims.py
+ - Fig. 2: ptcda.py
+ - Fig. 3: bcb.py
+ - Fig. 4: water.py
+ - Fig. 5: surface_sims_bcb_water.py
  - Fig. S1: model_schem.tex
  - Fig. S3: stats.py\*
  - Fig. S4: esmap_sample.py and then esmap_schem.tex
- - Fig. S5: afm_stacks.py
- - Fig. S6: sims_hartree.py
- - Fig. S7: ptcda_surface_sim.py
- - Fig. S8: single_tip.py
- - Fig. S9: sims_Cl.py
- - Fig. S10: height_dependence.py
- - Fig. S11: extra_electron.py
- - Fig. S12: background_gradient.py
+ - Fig. S5: stats_spring_constants.py\*
+ - Fig. S6: afm_stacks.py and afm_stacks2.py
+ - Fig. S7: sims_hartree.py
+ - Fig. S8: ptcda_surface_sim.py
+ - Fig. S9: single_tip.py
+ - Fig. S10: sims_Cl.py
+ - Fig. S11: height_dependence.py
+ - Fig. S12: extra_electron.py
+ - Fig. S13: background_gradient.py
 
 \* Precalculated MSE values used by the plotting script are provided under `figures/stats`. The scripts used to calculate these values are also under `figures/stats`.
 
