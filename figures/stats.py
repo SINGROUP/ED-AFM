@@ -3,6 +3,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+# # Set matplotlib font rendering to use LaTex
 # plt.rcParams.update({
 #     "text.usetex": True,
 #     "font.family": "serif",

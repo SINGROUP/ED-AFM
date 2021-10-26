@@ -13,9 +13,12 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
+# # Set matplotlib font rendering to use LaTex
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Computer Modern Roman"]
+# })
 
 def apply_preprocessing(batch):
 
@@ -93,9 +96,8 @@ m_es = cm.ScalarMappable(cmap=cm.coolwarm)
 m_es.set_array((vmin, vmax))
 cbar = plt.colorbar(m_es, cax=cbar_ax)
 cbar.set_ticks(ticks)
-cbar.set_ticklabels([f'{i:.2f}'.replace('-', '$-$') for i in cbar.get_ticks()])
 cbar_ax.tick_params(labelsize=fontsize-1)
-cbar.set_label('V/Å', fontsize=fontsize) # Seems to be broken in matplotlib 3.3.3 with cmr10 font
+cbar.set_label('V/Å', fontsize=fontsize)
 
 # Turn off axes ticks
 pred_ax.set_axis_off()

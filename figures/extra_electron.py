@@ -20,9 +20,12 @@ from pyProbeParticle.GeneratorOCL_Simple2   import InverseAFMtrainer
 sys.path.append('..')
 import edafm.preprocessing as pp
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
+# # Set matplotlib font rendering to use LaTex
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Computer Modern Roman"]
+# })
 
 class Trainer(InverseAFMtrainer):
 

@@ -19,10 +19,12 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
-# plt.rcParams["font.serif"] = "cmr10"
+# # Set matplotlib font rendering to use LaTex
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Computer Modern Roman"]
+# })
 
 def apply_preprocessing_sim(batch):
 
@@ -161,8 +163,8 @@ for ax, ticks, pred, label in zip(axes, tick_arrays, [pred_sim, pred_bcb, pred_p
     m.set_array([vmin, vmax])
     cbar = plt.colorbar(m)
     cbar.set_ticks(ticks)
-    cbar.set_ticklabels([f'{i:.2f}'.replace('-', '$-$') for i in cbar.get_ticks()])
     cbar.ax.tick_params(labelsize=fontsize-1)
+    cbar.set_label('V/Å', fontsize=fontsize)
     ax.text(-0.1, 0.95, label, horizontalalignment='center',
         verticalalignment='center', transform=ax.transAxes, fontsize=fontsize)
     ax.set_axis_off()

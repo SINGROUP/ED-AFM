@@ -19,9 +19,12 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
+# # Set matplotlib font rendering to use LaTex
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Computer Modern Roman"]
+# })
 
 def apply_preprocessing_sim(batch):
 
@@ -203,27 +206,24 @@ m_es = cm.ScalarMappable(cmap=cm.coolwarm)
 m_es.set_array((vmin_sim_no_grad, vmax_sim_no_grad))
 cbar = plt.colorbar(m_es, cax=cbar_sim_no_grad_ax)
 cbar.set_ticks([-0.1, 0.0, 0.1])
-cbar.set_ticklabels([f'{i:.1f}'.replace('-', '$-$') for i in cbar.get_ticks()])
 cbar_sim_no_grad_ax.tick_params(labelsize=fontsize-1)
-cbar.set_label('V/Å', fontsize=fontsize) # Seems to be broken in matplotlib 3.3.3 with cmr10 font
+cbar.set_label('V/Å', fontsize=fontsize)
 
 # Plot ES Map colorbar for grad prediction
 m_es = cm.ScalarMappable(cmap=cm.coolwarm)
 m_es.set_array((vmin_sim_grad, vmax_sim_grad))
 cbar = plt.colorbar(m_es, cax=cbar_sim_grad_ax)
 cbar.set_ticks([-0.1, 0.0, 0.1])
-cbar.set_ticklabels([f'{i:.1f}'.replace('-', '$-$') for i in cbar.get_ticks()])
 cbar_sim_grad_ax.tick_params(labelsize=fontsize-1)
-cbar.set_label('V/Å', fontsize=fontsize) # Seems to be broken in matplotlib 3.3.3 with cmr10 font
+cbar.set_label('V/Å', fontsize=fontsize)
 
 # Plot ES Map colorbar for experimental prediction
 m_es = cm.ScalarMappable(cmap=cm.coolwarm)
 m_es.set_array((vmin_exp, vmax_exp))
 cbar = plt.colorbar(m_es, cax=cbar_exp_ax)
 cbar.set_ticks([-0.04, 0.0, 0.04])
-cbar.set_ticklabels([f'{i:.2f}'.replace('-', '$-$') for i in cbar.get_ticks()])
 cbar_exp_ax.tick_params(labelsize=fontsize-1)
-cbar.set_label('V/Å', fontsize=fontsize) # Seems to be broken in matplotlib 3.3.3 with cmr10 font
+cbar.set_label('V/Å', fontsize=fontsize)
 
 # Set labels
 pred_exp_ax.text(-0.06, 0.98, 'A', horizontalalignment='center',

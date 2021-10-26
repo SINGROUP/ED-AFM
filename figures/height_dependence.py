@@ -13,10 +13,12 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# # Set matplotlib font
-# from matplotlib import rc
-# rc('font', family = 'serif', serif = 'cmr10')
-# plt.rcParams["font.serif"] = "cmr10"
+# # Set matplotlib font rendering to use LaTex
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Computer Modern Roman"]
+# })
 
 def apply_preprocessing_bcb(X, real_dim):
 
@@ -83,6 +85,17 @@ ticks = [
     [-0.08, -0.04, 0.00, 0.04, 0.08]
 ]
 
+offsets_labels = [
+    [
+        ['-0.1Å', '+0.0Å', '+0.1Å', '+0.5Å'],
+        ['-0.1Å', '+0.0Å', '+0.1Å']
+    ],
+    [
+        ['-0.6Å', '-0.2Å', '-0.1Å', '+0.0Å'],
+        ['-0.1Å', '+0.0Å', '+0.1Å']
+    ]
+]
+
 # Do for both BCB and PTCDA
 for k, X in enumerate([X_bcb, X_ptcda]):
 
@@ -115,13 +128,20 @@ for k, X in enumerate([X_bcb, X_ptcda]):
         for j in range(4):
             pred_axes[i, j].imshow(preds[i, j].T, origin='lower', cmap='coolwarm', vmin=vmin, vmax=vmax)
             pred_axes[i, j].set_axis_off()
+            if i == 0:
+                pred_axes[i, j].text(0.5, 1.06+k*0.03, offsets_labels[k][0][j], horizontalalignment='center',
+                verticalalignment='center', transform=pred_axes[i, j].transAxes,
+                fontsize=fontsize-2)
+            if j == 0:
+                pred_axes[i, j].text(-0.06, 0.5, offsets_labels[k][1][i], horizontalalignment='center',
+                verticalalignment='center', transform=pred_axes[i, j].transAxes,
+                rotation='vertical', fontsize=fontsize-2)
     
     # Plot ES Map colorbar
     m_es = cm.ScalarMappable(cmap=cm.coolwarm)
     m_es.set_array((vmin, vmax))
     cbar = plt.colorbar(m_es, cax=cbar_ax)
     cbar.set_ticks(ticks[k])
-    cbar.set_ticklabels([f'{i:.2f}'.replace('-', '$-$') for i in cbar.get_ticks()])
     cbar_ax.tick_params(labelsize=fontsize-1)
 
     # Set Xe-shift title

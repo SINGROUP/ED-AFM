@@ -13,7 +13,7 @@ sys.path.append('..')
 import edafm.preprocessing as pp
 from edafm.models import EDAFMNet
 
-# Set matplotlib font rendering to use LaTex
+# # Set matplotlib font rendering to use LaTex
 # plt.rcParams.update({
 #     "text.usetex": True,
 #     "font.family": "serif",
