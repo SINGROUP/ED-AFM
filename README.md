@@ -1,7 +1,7 @@
 # ED-AFM
 Electrostatic Discovery Atomic Force Microscopy
 
-[Link to paper](https://arxiv.org/abs/2108.04333) (Paper still pending peer review.)
+Link to paper: https://pubs.acs.org/doi/10.1021/acsnano.1c06840
 
 Abstract:
 _While offering unprecedented resolution of atomic and electronic structure, Scanning Probe Microscopy techniques have found greater challenges in providing reliable electrostatic characterization at the same scale. In this work, we introduce Electrostatic Discovery Atomic Force Microscopy, a machine learning based method which provides immediate quantitative maps of the electrostatic potential directly from Atomic Force Microscopy images with functionalized tips. We apply this to characterize the electrostatic properties of a variety of molecular systems and compare directly to reference simulations, demonstrating good agreement. This approach opens the door to reliable atomic scale electrostatic maps on any system with minimal computational overhead._
@@ -10,7 +10,7 @@ _While offering unprecedented resolution of atomic and electronic structure, Sca
 
 This repository serves as an archive of the code and data used to achieve the results in the above paper, and it is not subject to any further development. However, if there is a broken link etc., do raise an issue to let us know.
 
-API reference: https://ed-afm.readthedocs.io/en/latest/ (Auto-generated from docstring using Sphinx)
+API reference: https://ed-afm.readthedocs.io/en/latest/ (Auto-generated from docstrings using Sphinx)
 
 ## Setup
 
