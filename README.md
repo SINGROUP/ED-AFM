@@ -1,6 +1,8 @@
 # ED-AFM
 Electrostatic Discovery Atomic Force Microscopy
 
+[![DOI](https://zenodo.org/badge/337114201.svg)](https://zenodo.org/badge/latestdoi/337114201)
+
 Link to paper: https://pubs.acs.org/doi/10.1021/acsnano.1c06840
 
 Abstract:
